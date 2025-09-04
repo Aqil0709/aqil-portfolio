@@ -9,32 +9,71 @@
   <meta name="author" content="Aqil Jamadar" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">
+
   <style>
-    body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e2e8f0; }
-    #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-    .section-card { background-color: rgba(23,23,23,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-    .skill-card, .project-card { background-color: #1e293b; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e2e8f0; overflow-x: hidden; }
+    
+    #tech-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      background: #0a0a0a;
+    }
+
+    .section-card, .skill-card, .project-card {
+      position: relative;
+      background-color: rgba(23,23,23,0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .section-card::before, .skill-card::before, .project-card::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, rgba(14,165,233,0.05) 0%, rgba(14,165,233,0.15) 50%, rgba(14,165,233,0.05) 100%);
+      z-index: 0; pointer-events: none;
+      animation: gradientShift 6s linear infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .skill-card, .project-card { z-index: 10; }
     .skill-card:hover, .project-card:hover { transform: translateY(-8px); box-shadow: 0 10px 30px rgba(14,165,233,0.25); }
+
     .timeline-item::before { content: ''; position: absolute; left: -53px; top: 4px; width: 1.5rem; height: 1.5rem; background-color: #0ea5e9; border-radius: 50%; border: 4px solid #0a0a0a; box-shadow: 0 0 12px rgba(14,165,233,0.6); }
+
     .scroll-reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
     .typed-cursor { opacity: 1; animation: typedjsBlink 0.7s infinite; }
     @keyframes typedjsBlink { 50% { opacity: 0.0; } }
+
     /* Scroll progress bar */
     #progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: #0ea5e9; width: 0%; z-index: 9999; }
 
-    #work .section-card {
-    background-color: rgba(23,23,23,0.85);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
+    /* Section parallax gradient */
+    section {
+      background: linear-gradient(135deg, #0a0a0a 0%, #111827 100%);
+      background-size: 200% 200%;
+      animation: bgShift 20s ease infinite;
+    }
+    @keyframes bgShift {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
   </style>
 </head>
 <body class="antialiased">
+
+  <!-- Tech background -->
+  <div id="tech-bg"></div>
 
   <!-- Progress bar -->
   <div id="progress-bar"></div>
@@ -67,9 +106,9 @@
   </header>
 
   <main class="relative">
+
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center text-center relative overflow-hidden">
-      <div id="particles-js"></div>
       <div class="z-10 px-4">
         <h2 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
           Full Stack Developer & <br class="hidden md:block"/>
@@ -82,127 +121,115 @@
           <a href="#contact" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 transition-transform transform hover:scale-105">
             Get In Touch
           </a>
-          
         </div>
       </div>
     </section>
 
-        <div class="container mx-auto px-6 py-20 space-y-28">
+    <div class="container mx-auto px-6 py-20 space-y-28">
 
-            <!-- About Me Section -->
-            <section id="about" class="scroll-reveal">
-                <div class="section-card p-8 md:p-12 rounded-2xl">
-                    <h3 class="text-3xl font-bold text-white mb-6 text-center">About Me</h3>
-                    <div class="flex flex-col md:flex-row items-center gap-10">
-                        <div class="md:w-1/3 text-center">
-                            <img src="public/aj.jpg" alt="Aqil Jamadar" class="rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto border-4 border-sky-500 shadow-lg">
-                        </div>
-                        <div class="md:w-2/3 text-slate-300 text-lg space-y-4">
-                            <p>
-                                Hello, I'm Aqil Ayyaz Jamadar, a dedicated Full Stack Developer from Islampur, Maharashtra. My 1.6 years of experience are marked by a proven ability to design, develop, and deploy innovative web solutions—from boosting efficiency with React.js and Next.js to building scalable APIs with Node.js and Python.
-</p>
-                            <p>
-                                I'm a passionate Full Stack Developer with a proven track record of building and maintaining dynamic web applications. My experience at companies like Implisoft and Cognizant has equipped me with a strong foundation in software development principles and practices.
-                            </p>
-                            <p>
-                                My journey in tech is driven by a relentless curiosity. I am currently expanding my expertise into Artificial Intelligence and Machine Learning, with the goal of leveraging these powerful technologies to create more intelligent, efficient, and impactful solutions. I thrive on challenges and am excited to contribute to the next wave of technological innovation.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <!-- About Me Section -->
+      <section id="about" class="scroll-reveal">
+        <div class="section-card p-8 md:p-12 rounded-2xl">
+          <h3 class="text-3xl font-bold text-white mb-6 text-center">About Me</h3>
+          <div class="flex flex-col md:flex-row items-center gap-10">
+            <div class="md:w-1/3 text-center">
+              <img src="public/aj.jpg" alt="Aqil Jamadar" class="rounded-full w-48 h-48 md:w-64 md:h-64 mx-auto border-4 border-sky-500 shadow-lg">
+            </div>
+            <div class="md:w-2/3 text-slate-300 text-lg space-y-4">
+              <p>Hello, I'm Aqil Ayyaz Jamadar, a dedicated Full Stack Developer from Islampur, Maharashtra...</p>
+              <p>I'm a passionate Full Stack Developer with a proven track record...</p>
+              <p>My journey in tech is driven by a relentless curiosity...</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Experience Section -->
-            <section id="experience" class="scroll-reveal">
-                 <h3 class="text-3xl font-bold text-white mb-12 text-center">Work Experience</h3>
-                 <div class="relative max-w-2xl mx-auto border-l-2 border-slate-700 pl-10">
-                    <!-- Implisoft -->
-                    <div class="mb-12 relative timeline-item">
-                        <h4 class="text-2xl font-semibold text-sky-400">Full Stack Developer</h4>
-                        <p class="text-md font-medium text-white">Implisoft</p>
-                        <p class="text-sm text-slate-400 mb-2">March 2025 - Present</p>
-                        <ul class="list-disc list-inside text-slate-300 space-y-1">
-                            <li>Developing and maintaining scalable web applications using modern frameworks.</li>
-                            <li>Collaborating with cross-functional teams to define, design, and ship new features.</li>
-                            <li>Ensuring the performance, quality, and responsiveness of applications.</li>
-                        </ul>
-                    </div>
-                    <!-- Cognizant -->
-                    <div class="relative timeline-item">
-                        <h4 class="text-2xl font-semibold text-sky-400">Software Developer</h4>
-                        <p class="text-md font-medium text-white">Cognizant</p>
-                        <p class="text-sm text-slate-400 mb-2">1 Year Experience</p>
-                        <ul class="list-disc list-inside text-slate-300 space-y-1">
-                            <li>Contributed to the full software development lifecycle, from concept to deployment.</li>
-                            <li>Wrote clean, maintainable, and efficient code for various projects.</li>
-                            <li>Participated in code reviews and provided constructive feedback to peers.</li>
-                        </ul>
-                    </div>
-                 </div>
-            </section>
+      <!-- Experience Section -->
+      <section id="experience" class="scroll-reveal">
+        <h3 class="text-3xl font-bold text-white mb-12 text-center">Work Experience</h3>
+        <div class="relative max-w-2xl mx-auto border-l-2 border-slate-700 pl-10">
+          <!-- Implisoft -->
+          <div class="mb-12 relative timeline-item">
+            <h4 class="text-2xl font-semibold text-sky-400">Full Stack Developer</h4>
+            <p class="text-md font-medium text-white">Implisoft</p>
+            <p class="text-sm text-slate-400 mb-2">March 2025 - Present</p>
+            <ul class="list-disc list-inside text-slate-300 space-y-1">
+              <li>Developing and maintaining scalable web applications using modern frameworks.</li>
+              <li>Collaborating with cross-functional teams to define, design, and ship new features.</li>
+              <li>Ensuring the performance, quality, and responsiveness of applications.</li>
+            </ul>
+          </div>
+          <!-- Cognizant -->
+          <div class="relative timeline-item">
+            <h4 class="text-2xl font-semibold text-sky-400">Software Developer</h4>
+            <p class="text-md font-medium text-white">Cognizant</p>
+            <p class="text-sm text-slate-400 mb-2">1 Year Experience</p>
+            <ul class="list-disc list-inside text-slate-300 space-y-1">
+              <li>Contributed to the full software development lifecycle, from concept to deployment.</li>
+              <li>Wrote clean, maintainable, and efficient code for various projects.</li>
+              <li>Participated in code reviews and provided constructive feedback to peers.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-            <!-- My Work Section -->
-        <section id="work" class="scroll-reveal">
-  <div class="section-card p-8 md:p-12 rounded-2xl">
-    <h3 class="text-3xl font-bold text-white mb-12 text-center">My Work</h3>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Project 1 -->
-        <div class="project-card rounded-lg overflow-hidden relative group">
-            <div class="absolute inset-0 bg-gradient-to-tr from-sky-800 via-sky-600 to-sky-400 opacity-20 group-hover:opacity-40 transition-opacity"></div>
-            <img src="public/image.png" alt="Aaisaheb Vastram" class="w-full h-48 object-cover relative z-10">
-            <div class="p-6 relative z-10">
+      <!-- My Work Section -->
+      <section id="work" class="scroll-reveal">
+        <div class="section-card p-8 md:p-12 rounded-2xl">
+          <h3 class="text-3xl font-bold text-white mb-12 text-center">My Work</h3>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project 1 -->
+            <div class="project-card rounded-lg overflow-hidden relative group">
+              <div class="absolute inset-0 bg-gradient-to-tr from-sky-800 via-sky-600 to-sky-400 opacity-20 group-hover:opacity-40 transition-opacity"></div>
+              <img src="public/image.png" alt="Aaisaheb Vastram" class="w-full h-48 object-cover relative z-10">
+              <div class="p-6 relative z-10">
                 <h4 class="text-xl font-bold text-white mb-2">Aaisaheb Vasstram E-commerce Platform</h4>
                 <p class="text-slate-300 mb-4">A full-featured e-commerce website with a custom CMS, built with the MERN stack.</p>
                 <a href="https://aaisahebvastram.com" class="text-sky-400 hover:underline font-medium">Live Demo &rarr;</a>
+              </div>
             </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="project-card rounded-lg overflow-hidden relative group">
-            <div class="absolute inset-0 bg-gradient-to-tr from-purple-800 via-pink-600 to-red-400 opacity-20 group-hover:opacity-40 transition-opacity"></div>
-            <img src="public/exam.png" alt="AI Exam System" class="w-full h-48 object-cover relative z-10">
-            <div class="p-6 relative z-10">
+            <!-- Project 2 -->
+            <div class="project-card rounded-lg overflow-hidden relative group">
+              <div class="absolute inset-0 bg-gradient-to-tr from-purple-800 via-pink-600 to-red-400 opacity-20 group-hover:opacity-40 transition-opacity"></div>
+              <img src="public/exam.png" alt="AI Exam System" class="w-full h-48 object-cover relative z-10">
+              <div class="p-6 relative z-10">
                 <h4 class="text-xl font-bold text-white mb-2">AI Exam System</h4>
-                <p class="text-slate-300 mb-4">A smart Exam Browser, designed for educational institutions, corporate aptitude tests, and online learning platforms. Provides seamless support for students and professionals alike.</p>
+                <p class="text-slate-300 mb-4">A smart Exam Browser for educational institutions and online learning platforms.</p>
                 <a href="https://github.com/Aqil0709/exam.git" class="text-sky-400 hover:underline font-medium">View on GitHub &rarr;</a>
+              </div>
             </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="project-card rounded-lg overflow-hidden relative group">
-            <div class="absolute inset-0 bg-gradient-to-tr from-green-800 via-green-600 to-teal-400 opacity-20 group-hover:opacity-40 transition-opacity"></div>
-            <img src="public/hospital.png" alt="Data Visualization Dashboard" class="w-full h-48 object-cover relative z-10">
-            <div class="p-6 relative z-10">
+            <!-- Project 3 -->
+            <div class="project-card rounded-lg overflow-hidden relative group">
+              <div class="absolute inset-0 bg-gradient-to-tr from-green-800 via-green-600 to-teal-400 opacity-20 group-hover:opacity-40 transition-opacity"></div>
+              <img src="public/hospital.png" alt="Data Visualization Dashboard" class="w-full h-48 object-cover relative z-10">
+              <div class="p-6 relative z-10">
                 <h4 class="text-xl font-bold text-white mb-2">Dr. Desai Clinic (OPD Management System)</h4>
-                <p class="text-slate-300 mb-4">A comprehensive management system for hospital Outpatient Departments (OPD), developed using the MERN stack.
-</p>              
+                <p class="text-slate-300 mb-4">Comprehensive hospital OPD management system built with MERN stack.</p>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-  </div>
-</section>
+      </section>
 
+      <!-- Education Section -->
+      <section id="education" class="scroll-reveal">
+        <h3 class="text-3xl font-bold text-white mb-12 text-center">Education & Certifications</h3>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="section-card p-8 rounded-2xl text-center">
+            <h4 class="text-2xl font-semibold text-sky-400 mb-2">Master of Computer Applications</h4>
+            <p class="text-white font-medium">University of Mumbai</p>
+            <p class="text-slate-300">Completed with 8.23 CGPA</p>
+          </div>
+          <div class="section-card p-8 rounded-2xl text-center border-2 border-sky-500 shadow-lg shadow-sky-500/20">
+            <h4 class="text-2xl font-semibold text-sky-400 mb-2">AI Engineer Course</h4>
+            <p class="text-white font-medium">Ongoing Certification</p>
+            <p class="text-slate-300">Completing Soon</p>
+          </div>
+        </div>
+      </section>
 
-
-            <!-- Education & Certification Section -->
-            <section id="education" class="scroll-reveal">
-                <h3 class="text-3xl font-bold text-white mb-12 text-center">Education & Certifications</h3>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="section-card p-8 rounded-2xl text-center">
-                        <h4 class="text-2xl font-semibold text-sky-400 mb-2">Master of Computer Applications</h4>
-                        <p class="text-white font-medium">University of Mumbai</p>
-                        <p class="text-slate-300">Completed with 8.23 CGPA</p>
-                    </div>
-                    <div class="section-card p-8 rounded-2xl text-center border-2 border-sky-500 shadow-lg shadow-sky-500/20">
-                        <h4 class="text-2xl font-semibold text-sky-400 mb-2">AI Engineer Course</h4>
-                        <p class="text-white font-medium">Ongoing Certification</p>
-                        <p class="text-slate-300">Completing Soon</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Skills Section -->
-            <section id="skills" class="scroll-reveal">
+      <!-- Skills Section -->
+      <section id="skills" class="scroll-reveal">
                 <h3 class="text-3xl font-bold text-white mb-12 text-center">Technical Skills</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     <!-- Example Skills - Add your own! -->
@@ -265,76 +292,77 @@
                 </div>
             </section>
 
-            <!-- Contact Section -->
-            <section id="contact" class="scroll-reveal">
-                <div class="section-card p-8 md:p-12 rounded-2xl max-w-2xl mx-auto">
-                     <h3 class="text-3xl font-bold text-white mb-8 text-center">Contact Me</h3>
-                     <p class="text-center text-slate-300 mb-8">
-                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious vision. Feel free to reach out.
-                     </p>
-                     <div class="text-center">
-                        <a href="mailto:aqil.jamadar09@gmail.com" class="inline-block bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 transition-transform transform hover:scale-105">
-                            aqil.jamadar09@gmail.com
-                        </a>
-                     </div>
-                </div>
-            </section>
+      <!-- Contact Section -->
+      <section id="contact" class="scroll-reveal">
+        <div class="section-card p-8 md:p-12 rounded-2xl max-w-2xl mx-auto">
+          <h3 class="text-3xl font-bold text-white mb-8 text-center">Contact Me</h3>
+          <p class="text-center text-slate-300 mb-8">I'm always open to discussing new projects, creative ideas, or opportunities...</p>
+          <div class="text-center">
+            <a href="mailto:aqil.jamadar09@gmail.com" class="inline-block bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 transition-transform transform hover:scale-105">
+              aqil.jamadar09@gmail.com
+            </a>
+          </div>
         </div>
-    </main>
+      </section>
 
-    <!-- Footer -->
-   <footer class="bg-black/50 py-6">
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/50 py-6">
     <div class="container mx-auto px-6 text-center text-slate-400 space-y-4">
       <div class="flex justify-center space-x-6 text-2xl">
         <a href="https://github.com/" target="_blank" class="hover:text-sky-400"><i class="ri-github-fill"></i></a>
         <a href="https://linkedin.com/" target="_blank" class="hover:text-sky-400"><i class="ri-linkedin-box-fill"></i></a>
-        <a href="mailto:aqil.jamadar09@gmail.com" class="hover:text-sky-400"><i class="ri-mail-line"></i></a>
+        <a href="https://twitter.com/" target="_blank" class="hover:text-sky-400"><i class="ri-twitter-fill"></i></a>
       </div>
-      <p>&copy; 2025 Aqil Jamadar. All Rights Reserved.</p>
+      <p class="text-sm">&copy; 2025 Aqil Jamadar. All Rights Reserved.</p>
     </div>
   </footer>
 
   <script>
-    // Particles.js config
-    particlesJS('particles-js', { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#0ea5e9" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#0ea5e9", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 4 } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "repulse": { "distance": 100, "duration": 0.4 } } }, "retina_detect": true });
-
-    // Typed.js
-    document.addEventListener('DOMContentLoaded', function(){
-      new Typed('#typed-text', {
-        strings: ['Aspiring AI Engineer', 'Creative Problem Solver', 'Technology Enthusiast'],
-        typeSpeed: 50, backSpeed: 25, backDelay: 1500, loop: true
-      });
-    });
-
     // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const menuBtn = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+    menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+    // Typed.js hero animation
+    new Typed('#typed-text', { strings: ['MERN Developer', 'AI Enthusiast', 'Full Stack Engineer'], typeSpeed: 70, backSpeed: 50, loop: true });
+
+    // tsParticles background
+    tsParticles.load("tech-bg", {
+      fullScreen: { enable: true, zIndex: -1 },
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#0ea5e9" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3, random: true },
+        links: { enable: true, distance: 150, color: "#0ea5e9", opacity: 0.3, width: 1 },
+        move: { enable: true, speed: 2 }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+        modes: { repulse: { distance: 100 }, push: { quantity: 4 } }
+      },
+      retina_detect: true
+    });
 
     // Scroll reveal
     const scrollElements = document.querySelectorAll('.scroll-reveal');
-    const elementInView = (el, dividend = 1) => el.getBoundingClientRect().top <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
-    const displayScrollElement = (element) => { element.classList.add('visible'); };
-    const handleScrollAnimation = () => { scrollElements.forEach((el) => { if (elementInView(el, 1.25)) displayScrollElement(el); }); };
-    window.addEventListener('scroll', handleScrollAnimation); handleScrollAnimation();
+    const elementInView = (el, dividend = 1) => { const elementTop = el.getBoundingClientRect().top; return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend; };
+    const displayScrollElement = (el) => { el.classList.add('visible'); };
+    const hideScrollElement = (el) => { el.classList.remove('visible'); };
+    const handleScrollAnimation = () => { scrollElements.forEach(el => { if(elementInView(el, 1.25)) displayScrollElement(el); else hideScrollElement(el); }); };
+    window.addEventListener('scroll', handleScrollAnimation);
+    handleScrollAnimation();
 
     // Scroll progress bar
     const progressBar = document.getElementById('progress-bar');
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      progressBar.style.width = scrollPercent + "%";
-    });
+    window.addEventListener('scroll', () => { const scrollTop = window.scrollY; const docHeight = document.body.scrollHeight - window.innerHeight; const scrolled = (scrollTop / docHeight) * 100; progressBar.style.width = scrolled + '%'; });
 
-    // Active nav highlighting
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-link");
-    window.addEventListener("scroll", () => {
-      let current = "";
-      sections.forEach(section => { if(window.scrollY >= section.offsetTop - 60) current = section.getAttribute("id"); });
-      navLinks.forEach(link => { link.classList.remove("text-sky-400"); if(link.getAttribute("href").includes(current)) link.classList.add("text-sky-400"); });
-    });
+    // Smooth scroll for nav links
+    document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', e => { e.preventDefault(); const target = document.querySelector(link.getAttribute('href')); target.scrollIntoView({ behavior: 'smooth' }); mobileMenu.classList.add('hidden'); }); });
   </script>
 </body>
 </html>
